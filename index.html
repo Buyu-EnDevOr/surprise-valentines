@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Uma Surpresa Para Você 💕</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fundo com efeito de partículas/movimento -->
+    <div class="background-container">
+        <canvas id="particleCanvas"></canvas>
+    </div>
+
+    <!-- Slider Principal -->
+    <div class="slider-container">
+        <button class="arrow-btn left-arrow" id="prevBtn">‹</button>
+        
+        <div class="slider-wrapper">
+            <div class="slide active" data-index="0">
+                <div class="slide-content">
+                    <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=400&fit=crop" alt="Foto especial">
+                    <h2>Para alguém tão especial</h2>
+                    <p>Que não cabe no brilho do sol nem na vastidão do céu</p>
+                </div>
+            </div>
+
+            <div class="slide" data-index="1">
+                <div class="slide-content">
+                    <img src="https://images.unsplash.com/photo-1516231558828-dc3f65b1e9f9?w=400&h=400&fit=crop" alt="Nossos momentos">
+                    <h2>Eu não poderia passar este dia em branco</h2>
+                    <p>Você é quem me dá razões para sorrir ao acordar todos os dias</p>
+                </div>
+            </div>
+
+            <div class="slide" data-index="2">
+                <div class="slide-content">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=400&fit=crop" alt="Você e eu">
+                    <h2>Eu te amo</h2>
+                    <p>E acima de tudo eu tenho orgulho sobre quem você é<br>Nunca se esqueça disso</p>
+                </div>
+            </div>
+
+            <div class="slide" data-index="3">
+                <div class="slide-content">
+                    <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=400&fit=crop" alt="Para sempre">
+                    <h2>Obrigado por estar sempre comigo</h2>
+                    <p>Feliz dia dos namorados meu amor<br><strong>EU TE AMO</strong> 💕</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="arrow-btn right-arrow" id="nextBtn">›</button>
+    </div>
+
+    <!-- Indicadores de slide -->
+    <div class="slide-indicators">
+        <span class="indicator active" data-index="0"></span>
+        <span class="indicator" data-index="1"></span>
+        <span class="indicator" data-index="2"></span>
+        <span class="indicator" data-index="3"></span>
+    </div>
+
+    <!-- Música (opcional) -->
+    <div class="music-control">
+        <button id="musicBtn" class="music-btn">🎵</button>
+        <audio id="bgMusic" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        // Canvas de fundo
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Desenhar fundo roxo
+        function drawBackground() {
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#2d1b4e');
+            gradient.addColorStop(0.5, '#1a0f2e');
+            gradient.addColorStop(1, '#3d1e5c');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(drawBackground);
+        }
+
+        drawBackground();
+
+        // ========== SLIDER ==========
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+
+        let currentSlide = 0;
+
+        function goToSlide(n) {
+            // Remove active de todos
+            slides.forEach(s => s.classList.remove('active'));
+            indicators.forEach(i => i.classList.remove('active'));
+            
+            // Define índice com validação
+            currentSlide = n;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            
+            // Adiciona active
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            
+            console.log('📍 Slide:', currentSlide);
+        }
+
+        // Botões
+        nextBtn.addEventListener('click', () => {
+            console.log('➡️ Próximo');
+            goToSlide(currentSlide + 1);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            console.log('⬅️ Anterior');
+            goToSlide(currentSlide - 1);
+        });
+
+        // Indicadores
+        indicators.forEach((ind, i) => {
+            ind.addEventListener('click', () => {
+                goToSlide(i);
+            });
+        });
+
+        // Teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+            if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+        });
+
+        // Iniciar
+        goToSlide(0);
+        console.log('✅ Slider pronto!');
+
+        // ========== MÚSICA ==========
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+
+        musicBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicBtn.classList.add('playing');
+            } else {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            }
+        });
+
+        bgMusic.volume = 0.3;
+    </script>
+</body>
+</html>
