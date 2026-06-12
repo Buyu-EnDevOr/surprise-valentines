@@ -86,7 +86,7 @@ body {
     text-align: center;
     backdrop-filter: blur(20px);
     background: linear-gradient(135deg, rgba(139, 69, 139, 0.25) 0%, rgba(186, 85, 211, 0.15) 100%);
-    padding: 100px 70px;
+    padding: 60px 50px;
     border-radius: 40px;
     border: 2px solid rgba(220, 160, 220, 0.4);
     box-shadow: 
@@ -102,10 +102,10 @@ body {
 /* IMAGENS NOS SLIDES */
 .slide-content img {
     width: 100%;
-    max-width: 350px;
-    height: auto;
+    max-width: 280px;
+    height: 280px;
     border-radius: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     box-shadow: 
         0 15px 40px rgba(186, 85, 211, 0.6),
         0 0 30px rgba(255, 192, 203, 0.3);
